@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html>
+<body>
+
+<!-- Függvény meghívása adott számmal -->
+<button onclick="myFunction(10600)">Convert</button> 
+<p id="demo"></p>
+
+<script>
+  function myFunction(n) {
+    
+    var unit = [" year", " day", " hour", " minute", " second"];  // időegységek elnevezése
+    var sec = [31536000, 86400, 3600, 60, 1];                     // időegységek másodpercben
+    var counter = 0;                                              // az eredménytömbben szereplő, értékkel bíró időegységek számlálója 
+    var result = [0, 0, 0, 0, 0];                                 // eredménytömb
+    var string = "Result: ";                                      // eredmény szöveg
+    var i;                                                        // ciklusváltozó
+    
+    // bemeneti változó értékének ellenőrzése (0 vagy pozitív egész számot várunk)
+    
+    if (n < 0 || Number.isInteger(n) == false) { 
+      string = "Number must be a non-negative integer!"; 
+      document.getElementById("demo").innerHTML = string;
+      return;
+    }
+      
+    // Eredmény ha a megadott szám nulla ***********************************
+    
+    if (n == 0) { string += " Now! "}
+
+    // az eredmény tömb feltöltése következik ***********************************
+
+    for (i = 0; i < 5 ;i++) {
+
+      result[i] = Math.floor (n / sec [i]);   // egészrész függvény
+      
+      if (result[i] > 0) {
+        n = n - result[i] * sec[i];
+        counter ++;
+      } else result[i] = 0;
+
+    } // ciklus vége
+    
+    // kiirandó eredmény string feltöltése következik ***************************
+    
+    for (i = 0; i < 5; i++ ){
+      if (result[i] > 0) {
+      
+        if (result[i] > 1) {string += result[i] + unit[i] + "s";  // többesszám vizsgálata kiíráshoz
+        } else string += result[i] + unit[i];
+        counter--;
+
+        if (counter > 1) { string += ", "; }                      // eredmény hosszától függően "," vagy "and" kerül az egységek közé
+        if (counter == 1) { string += " and "; }
+      }
+    } //ciklus vége
+    
+    // Eredményül kapott string kiiratása:
+    document.getElementById("demo").innerHTML = string;
+}
+</script>
+
+</body>
+</html>
